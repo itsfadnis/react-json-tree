@@ -6,7 +6,12 @@ function getStateFromProps(props) {
   // calculate individual node expansion if necessary
   const expanded =
     props.shouldExpandRange && !props.isCircular
-      ? props.shouldExpandRange(props.keyPath, props.data, props.level)
+      ? props.shouldExpandRange(
+          props.keyPath,
+          props.from,
+          props.to,
+          data.slice(props.from, props.to + 1)
+        )
       : false;
   return {
     expanded
@@ -30,7 +35,7 @@ export default class ItemRange extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const nextState = getStateFromProps(nextProps);
     if (getStateFromProps(this.props).expanded !== nextState.expanded) {
       this.setState(nextState);
