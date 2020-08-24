@@ -2,20 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import JSONArrow from './JSONArrow';
 
+function getStateFromProps(props) {
+  // calculate individual node expansion if necessary
+  const expanded =
+    props.shouldExpandRange && !props.isCircular
+      ? props.shouldExpandRange(props.keyPath, props.data, props.level)
+      : false;
+  return {
+    expanded
+  };
+}
+
 export default class ItemRange extends React.Component {
   static propTypes = {
     styling: PropTypes.func.isRequired,
     from: PropTypes.number.isRequired,
     to: PropTypes.number.isRequired,
     renderChildNodes: PropTypes.func.isRequired,
-    nodeType: PropTypes.string.isRequired
+    nodeType: PropTypes.string.isRequired,
+    shouldExpandRange: PropTypes.func
   };
 
   constructor(props) {
     super(props);
-    this.state = { expanded: false };
+    this.state = getStateFromProps(props);
 
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const nextState = getStateFromProps(nextProps);
+    if (getStateFromProps(this.props).expanded !== nextState.expanded) {
+      this.setState(nextState);
+    }
   }
 
   render() {

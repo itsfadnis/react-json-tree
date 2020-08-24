@@ -18,6 +18,7 @@ const defaultItemString = (type, data, itemType, itemString) => (
 );
 const defaultLabelRenderer = ([label]) => <span>{label}:</span>;
 const noCustomNode = () => false;
+const expandRange = () => false;
 
 function checkLegacyTheming(theme, props) {
   const deprecatedStylingMethodsMap = {
@@ -94,6 +95,7 @@ export default class JSONTree extends React.Component {
 
   static defaultProps = {
     shouldExpandNode: expandRootNode,
+    shouldExpandRange: expandRange,
     hideRoot: false,
     keyPath: ['root'],
     getItemString: defaultItemString,

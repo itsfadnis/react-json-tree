@@ -91,6 +91,7 @@ export default class JSONNestedNode extends React.Component {
     ).isRequired,
     labelRenderer: PropTypes.func.isRequired,
     shouldExpandNode: PropTypes.func,
+    shouldExpandRange: PropTypes.func,
     level: PropTypes.number.isRequired,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
     isCircular: PropTypes.bool,
