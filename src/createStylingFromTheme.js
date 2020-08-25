@@ -77,13 +77,18 @@ const getDefaultThemeStyling = theme => {
       }
     }),
 
-    itemRange: (styling, expanded) => ({
-      style: {
+    itemRange: (styling, expanded, highlighted) => {
+      let style = {
         paddingTop: expanded ? 0 : '0.25em',
         cursor: 'pointer',
         color: colors.LABEL_COLOR
+      };
+      if (highlighted) {
+        style.fontWeight = 'bold';
+        style.fontSize = '1.1em';
       }
-    }),
+      return { style };
+    },
 
     arrow: ({ style }, nodeType, expanded) => ({
       style: {

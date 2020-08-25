@@ -4,12 +4,12 @@ import JSONArrow from './JSONArrow';
 
 function getStateFromProps(props) {
   // calculate individual node expansion if necessary
-  const expanded =
-    props.shouldExpandRange && !props.isCircular
-      ? props.shouldExpandRange(props.keyPath, props.from, props.to)
-      : false;
   return {
-    expanded
+    expanded: false,
+    highlighted:
+      props.shouldExpandRange && !props.isCircular
+        ? props.shouldExpandRange(props.keyPath, props.from, props.to)
+        : false
   };
 }
 
@@ -32,7 +32,7 @@ export default class ItemRange extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const nextState = getStateFromProps(nextProps);
-    if (getStateFromProps(this.props).expanded !== nextState.expanded) {
+    if (getStateFromProps(this.props).highlighted !== nextState.highlighted) {
       this.setState(nextState);
     }
   }
@@ -46,7 +46,7 @@ export default class ItemRange extends React.Component {
       </div>
     ) : (
       <div
-        {...styling('itemRange', this.state.expanded)}
+        {...styling('itemRange', this.state.expanded, this.state.highlighted)}
         onClick={this.handleClick}
       >
         <JSONArrow
