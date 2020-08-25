@@ -6,12 +6,7 @@ function getStateFromProps(props) {
   // calculate individual node expansion if necessary
   const expanded =
     props.shouldExpandRange && !props.isCircular
-      ? props.shouldExpandRange(
-          props.keyPath,
-          props.from,
-          props.to,
-          props.data.slice(props.from, props.to + 1)
-        )
+      ? props.shouldExpandRange(props.keyPath, props.from, props.to)
       : false;
   return {
     expanded
